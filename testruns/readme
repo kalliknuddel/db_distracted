@@ -1,0 +1,19 @@
+
+API Key
+http://thetvdb.com/api/20EE1583110A3BA2/mirrors.xml
+
+
+Infos zu einer Serie => ergibt SerienID
+http://thetvdb.com/api/GetSeries.php?seriesname=
+e.g.
+http://thetvdb.com/api/GetSeries.php?seriesname=Banshee
+
+
+
+Infos zu Banshee
+http://thetvdb.com/api/20EE1583110A3BA2/series/259765/all/en
+
+=> extract, ergibt language.xml + banners.xml
+=> Jede Folge hat ihre EIGENE ID
+=> Wichtig fuer Updates
+
