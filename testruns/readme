@@ -11,7 +11,8 @@ http://thetvdb.com/api/GetSeries.php?seriesname=Banshee
 
 
 Infos zu Banshee
-http://thetvdb.com/api/20EE1583110A3BA2/series/259765/all/en
+http://thetvdb.com/api/20EE1583110A3BA2/series/259765/all/en.zip
+
 
 => extract, ergibt language.xml + banners.xml
 => Jede Folge hat ihre EIGENE ID
