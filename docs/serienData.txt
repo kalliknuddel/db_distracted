@@ -1,0 +1,25 @@
+zusaetzliche Daten zu jeder Serie
+    - id [number]
+    - FirstAired [date]
+    - Status (laeuft noch? still running?) [text][continuing?!]
+    - IMDB_ID [text/number]
+    - Network [text]
+    - Overview [text]
+    - Rating [float? int? text? 8.7]
+    - Runtime (Dauer) [int, "60"]
+    - SeriesID (zu welcher Serie gehoert die Folge, ID von thetvdb.com, nicht in mysql) [int]
+    - SeriesName [text]
+    - banner (HTTP Link) [text,url]
+
+Daten pro Folge
+    - id [int]
+    - Combined_episodenumber [int]
+    - Combinded_season [int]
+    - EpisodeName [text]
+    - EpisodeNumber [int]
+    - FirstAired [date]
+    - Overview
+    - Rating
+    - seasonid [int] (von thetvdb)
+    - seriesid [int] (von thetvdb)
+
