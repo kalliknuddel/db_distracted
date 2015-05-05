@@ -63,7 +63,7 @@ DATABASES = {
         'USER': 'distracted_user',          #    user der DB
         'PASSWORD': 'tada1233',
         'HOST': '127.0.0.1',
-        'PORT': '2001'
+        'PORT': '3306'
     }
 }
 
