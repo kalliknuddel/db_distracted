@@ -16,7 +16,7 @@ def handleEpisode (episodeData):
     print "Compined Episode Number: "    + getText(episodeData.getElementsByTagName("Combined_episodenumber"))
     print "Season Number: "              + getText(episodeData.getElementsByTagName("SeasonNumber"))
     print "Episode Number: "             + getText(episodeData.getElementsByTagName("EpisodeNumber"))
-    print "Title: "                     + getText(episodeData.getElementsByTagName("EpisodeName"))
+    print "Title: "                      + getText(episodeData.getElementsByTagName("EpisodeName"))
     print "First Aired: "                + getText(episodeData.getElementsByTagName("FirstAired"))
     print ""
 
