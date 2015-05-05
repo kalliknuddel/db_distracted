@@ -61,7 +61,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'db_distracted',            #    name der DB
         'USER': 'distracted_user',          #    user der DB
-        'PASSWORD': 'r0flr0lf',
+        'PASSWORD': 'tada1233',
         'HOST': '127.0.0.1',
         'PORT': '2001'
     }
