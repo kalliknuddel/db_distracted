@@ -1,4 +1,8 @@
 
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+
 {% if series_list %}
     <ul>
     {% for series in series_list %}

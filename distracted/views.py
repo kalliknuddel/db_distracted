@@ -1,16 +1,18 @@
 from django.shortcuts import render, get_object_or_404
 from django.http.response import HttpResponse
 from django.http import Http404
+from django.views import generic
 
 from .models import Series
 
 
-def index(request):
-    series_list = Series.objects.order_by('name')
-    context = {'series_list' : series_list}
-    return render(request, 'distracted/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'distracted/index.html'
+    context_object_name = 'series_list'
 
-def detail (request, series_id):
-    series = get_object_or_404(Series, id=series_id)
-    context = { 'series' : series }
-    return render (request, 'distracted/detail.html', context)
+    def get_queryset(self):
+        return Series.objects.order_by('name')
+
+class DetailView (generic.DetailView):
+    model = Series
+    template_name = 'distracted/detail.html'
