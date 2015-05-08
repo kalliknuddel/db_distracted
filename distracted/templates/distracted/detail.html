@@ -1,0 +1,17 @@
+
+<h1>{{ series.name }}</h1>
+
+{% if series_list %}
+<h4>{{ series.alias }}</h2>
+{% endif %}
+
+{% if series_list %}
+<h4>{{ series.first_aired }}</h2>
+{% endif %}
+
+{% if series.overview %}
+<p>{{ series.overview }}</p>
+{% endif %}
+
+<a href={% url 'distracted:index' %}>go back</a>
+
