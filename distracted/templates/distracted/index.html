@@ -1,0 +1,11 @@
+
+{% if series_list %}
+    <ul>
+    {% for series in series_list %}
+        <li><p><a href="{% url 'distracted:detail' series.id %}">{{ series.name }}</a></p><p>{{ series.overview }}</p></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Series are available.</p>
+{% endif %}
+
