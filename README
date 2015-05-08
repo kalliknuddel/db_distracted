@@ -1,0 +1,9 @@
+
+distraced
+
+tested on:
+ - Ubuntu 15.04
+ - Python3
+ - MySQL
+ - PyMySQL  (pip install PyMySQL)
+
