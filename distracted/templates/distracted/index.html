@@ -1,15 +1,26 @@
 
 {% load staticfiles %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
 
 {% if series_list %}
-    <ul>
-    {% for series in series_list %}
-        <li><p><a href="{% url 'distracted:detail' series.id %}">{{ series.name }}</a></p><p>{{ series.overview }}</p></li>
-    {% endfor %}
-    </ul>
+    <div class="series">
+        {% for series in series_list %}
+        <ul class="{% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
+            <li>
+                <p><a href="{% url 'distracted:detail' series.id %}">
+                    {{ series.name }}
+                </a></p>
+                <p class="seriesOverview">
+                    {{ series.overview }}
+                </p>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
 {% else %}
     <p>No Series are available.</p>
 {% endif %}
 
+<div class="back">
+    <a href="{% url 'distracted:search' %}">Add another TV Series</a>
+</div>
