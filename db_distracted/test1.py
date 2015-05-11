@@ -27,3 +27,11 @@ yadaZip.extractall ("extracted")
 #   extrahierte daten parsen und ausgeben
 tvseries.handleSeries ("extracted/en.xml")
 
+
+#import urllib
+#from xml.dom import minidom
+#params = urllib.parse.urlencode({'seriesname': 'the flash'})
+#url = "http://thetvdb.com/api/GetSeries.php?%s" % params
+#f = urllib.request.urlopen(url)
+#contents = f.read().decode('utf-8')
+#xmldom = minidom.parseString(contents)
