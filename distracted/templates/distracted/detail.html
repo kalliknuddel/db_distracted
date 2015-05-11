@@ -1,17 +1,35 @@
 
-<h1>{{ series.name }}</h1>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
 
-{% if series_list %}
-<h4>{{ series.alias }}</h2>
-{% endif %}
+<div class="container">
 
-{% if series_list %}
-<h4>{{ series.first_aired }}</h2>
-{% endif %}
+    <p class="seriesHead">
+        {{ series.name }}
+    </p>
 
-{% if series.overview %}
-<p>{{ series.overview }}</p>
-{% endif %}
+    {% if series_list %}
+        <p class="seriesAlias">
+            {{ series.alias }}
+        </p>
+    {% endif %}
 
-<a href={% url 'distracted:index' %}>go back</a>
+    {% if series_list %}
+        <p class="seriesAired">
+            {{ series.first_aired }}
+        </p>
+    {% endif %}
 
+    {% if series.overview %}
+        <p class="seriesOverview">
+            {{ series.overview }}
+        </p>
+    {% endif %}
+</div>
+
+
+<div class="back">
+    <a href={% url 'distracted:index' %}>
+        go back
+    </a>
+</divtat        >
