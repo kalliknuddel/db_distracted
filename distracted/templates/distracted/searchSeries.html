@@ -1,0 +1,24 @@
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+
+<div>
+    <p class="searchHead">Search for TV Series</p>
+    <form action="{% url 'distracted:add' %}" method="post">
+        {% csrf_token %}
+        <ul>
+            <ul class="searchHorizontal">
+                <li>Name</li>
+                <li><input type="text" name="seriesName"></li>
+            </ul>
+            <ul class="searchHorizontal">
+                <li><input type="submit" value="Search" /></li>
+            </ul>
+       </ul>
+    </form>
+</div>
+
+<div>
+    <a href={% url 'distracted:index' %}>back to index</a>
+</div>
