@@ -9,26 +9,23 @@
 
     {% for series in seriesList %}
         <div>
-            <img src="http://thetvdb.com/banners/{{ series.banner }}" />
-
-            <p class="alias">
-                {{ series.alias }}
-            </p>
-
             <p class="seriesHead">
                 <a href="{% url 'distracted:searchDetail' series.id %}">
                 {{ series.id }}: {{ series.name }}
                 </a>
             </p>
 
+                <p class="alias">
+                    {{ series.alias }}
+                </p>
 
-            <p class="seriesNetwork">
-                {{ series.firstAired }} - {{ series.network }}
-            </p>
+                <p class="seriesNetwork">
+                    {{ series.firstAired }} - {{ series.network }}
+                </p>
 
-            <p class="seriesOverview">
-                {{ series.overview }}
-            </p>
+                <p class="seriesOverview">
+                    {{ series.overview }}
+                </p>
         </div>
     {% endfor %}
 </div>

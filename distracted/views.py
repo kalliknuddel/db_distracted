@@ -6,16 +6,18 @@ from django.views.generic.edit import FormView
 from django.contrib import messages
 
 import urllib
+import tempfile
+import zipfile
 from xml.dom import minidom
 
 from .models import Series
 
 
-class IndexView(generic.ListView):
+class IndexView (generic.ListView):
     template_name = 'distracted/index.html'
     context_object_name = 'series_list'
 
-    def get_queryset(self):
+    def get_queryset (self):
         return Series.objects.order_by('name')
 
 class DetailView (generic.DetailView):
@@ -23,10 +25,10 @@ class DetailView (generic.DetailView):
     template_name = 'distracted/detail.html'
 
 def SearchSeries (request):
-    return render(request, 'distracted/searchSeries.html')
+    return render (request, 'distracted/searchSeries.html')
 
 class SearchResult (generic.View):
-    def parseTag(self, tagname, node):
+    def parseTag (self, tagname, node):
         try:
             result = node.getElementsByTagName(tagname)[0].firstChild.nodeValue
         except:
@@ -52,7 +54,7 @@ class SearchResult (generic.View):
                              'network'  : network} )
         return results
 
-    def post(self, request):
+    def post (self, request):
         if 'seriesName' in request.POST and request.POST['seriesName']:
             #    create URL
             params = urllib.parse.urlencode({'seriesname': request.POST['seriesName']})
@@ -76,6 +78,21 @@ class SearchResult (generic.View):
             messages.error(request, "You submitted an empty form!")
             return HttpResponseRedirect('/distracted/search/')
 
+    def get (self, request):
+        messages.error(request, "How dare you try to GET me")
+        return HttpResponseRedirect('/distracted/search/')
+
 class SearchDetail (generic.View):
     def get(self, request, seriesid):
+        url = "http://thetvdb.com/api/20EE1583110A3BA2/series/%s/all/en.zip" % seriesid
+        try:
+            local_filename, headers = urllib.request.urlretrieve(url)
+            archive = zipfile.ZipFile(local_filename, "r")
+            xmldata = archive.read("en.xml")
+            xmlactors = archive.read("actors.xml")
+            return HttpResponse (xmldata)
+        except urllib.error.HTTPError as e:
+            HttpResponse ("HTTP Error: " + str(e.code) + str(url))
+        except urllib.error.URLError as e:
+            HttpResponse ("URL Error: " + str(e.reason) + str(url))
         return HttpResponse("You chose id: #%s" % seriesid)
