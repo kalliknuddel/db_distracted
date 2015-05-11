@@ -3,19 +3,31 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
 
-<h1>{{ series.name }}</h1>
 
-{% if series_list %}
-<h4>{{ series.alias }}</h2>
-{% endif %}
+<div class="container">
+    <p><b>Results</b></p>
 
-{% if series_list %}
-<h4>{{ series.first_aired }}</h2>
-{% endif %}
+    <p class="seriesHead">
+        {{ seriesId }}: {{ seriesName }}
+    </p>
 
-{% if series.overview %}
-<p>{{ series.overview }}</p>
-{% endif %}
 
-<a href={% url 'distracted:index' %}>go back</a>
+    {% if seriesAired %}
+        <p class="seriesAired">
+            {{ seriesAired }}
+        </p>
+    {% endif %}
 
+    {% if seriesOverview %}
+        <p class="seriesOverview">
+            {{ seriesOverview }}
+        </p>
+    {% endif %}
+</div>
+
+
+<div class="back">
+    <a href={% url 'distracted:search' %}>
+        go back
+    </a>
+</div>

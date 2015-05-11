@@ -5,7 +5,15 @@
 
 <div>
     <p class="searchHead">Search for TV Series</p>
-    <form action="{% url 'distracted:add' %}" method="post">
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red;">Theres was an error:<br \>
+            {{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{% url 'distracted:searchResult' %}" method="post">
         {% csrf_token %}
         <ul>
             <ul class="searchHorizontal">
@@ -18,6 +26,7 @@
        </ul>
     </form>
 </div>
+
 
 <div>
     <a href={% url 'distracted:index' %}>back to index</a>
