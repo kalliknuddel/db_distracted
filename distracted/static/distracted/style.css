@@ -1,4 +1,46 @@
-li a {
-    color: green;
+
+
+div {
+    padding:    25px;
+    border:     1px solid navy;
+    margin:     10px;
+    width:      60%;
+    position:   relative;
+    top:        30px;
+    left:       15%;
 }
 
+
+div a {
+    color: blue;
+}
+
+
+ul {
+    width:      50%;
+    padding:    2px;
+    padding-left: 5%;
+}
+
+
+.searchHorizontal
+{
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+
+#   list view differences
+.ulFirst {
+    background-color: #eee;
+}
+.ulSecond {
+}
+
+.seriesOverview {
+    padding-left:   10%;
+}
+
+.searchHead {
+}
