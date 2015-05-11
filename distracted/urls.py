@@ -5,12 +5,14 @@ from django.conf.urls.i18n import urlpatterns
 
 urlpatterns = [
                #    /distracted/
+               #    index list view
                url (r'^$', views.IndexView.as_view(), name = 'index'),
-               
-               #    /add/
+
+               #    search stuff
                url (r'^search/$', views.SearchSeries, name = 'search'),
-               url (r'^add/$', views.AddSeries, name = 'add'),
-               
+               url (r'^result/$', views.AddSeries, name = 'searchResult'),
+
                #    /distracted/5/
+               #    detailed view
                url (r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail')
 ]
