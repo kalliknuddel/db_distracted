@@ -10,8 +10,12 @@ div {
     left:       15%;
 }
 
+.container {
+    padding-bottom:     50px;
+}
 
-div a {
+
+a {
     color: blue;
 }
 
@@ -30,6 +34,9 @@ ul {
     padding-right: 20px;
 }
 
+.alias {
+    font-style: italic;
+}
 
 #   list view differences
 .ulFirst {
