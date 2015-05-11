@@ -10,7 +10,7 @@ urlpatterns = [
 
                #    search stuff
                url (r'^search/$', views.SearchSeries, name = 'search'),
-               url (r'^result/$', views.AddSeries, name = 'searchResult'),
+               url (r'^result/$', views.SearchResult, name = 'searchResult'),
 
                #    /distracted/5/
                #    detailed view
