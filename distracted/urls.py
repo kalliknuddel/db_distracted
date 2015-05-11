@@ -9,8 +9,9 @@ urlpatterns = [
                url (r'^$', views.IndexView.as_view(), name = 'index'),
 
                #    search stuff
-               url (r'^search/$', views.SearchSeries, name = 'search'),
-               url (r'^result/$', views.SearchResult, name = 'searchResult'),
+               url (r'^search/$',           views.SearchSeries              , name = 'search'),
+               url (r'^result/$',           views.SearchResult.as_view()    , name = 'searchResult'),
+               url (r'^result/(?P<seriesid>[0-9]+)/$',  views.SearchDetail.as_view()    , name = 'searchDetail'),
 
                #    /distracted/5/
                #    detailed view

@@ -25,30 +25,57 @@ class DetailView (generic.DetailView):
 def SearchSeries (request):
     return render(request, 'distracted/searchSeries.html')
 
-def SearchResult (request):
-    if 'seriesName' in request.POST and request.POST['seriesName']:
-        #    create URL
-        params = urllib.parse.urlencode({'seriesname': request.POST['seriesName']})
-        url = "http://thetvdb.com/api/GetSeries.php?%s" % params
-        #    load data from url
-        with urllib.request.urlopen(url) as f:
-            contents = f.read().decode('utf-8')
-        xmldom = minidom.parseString(contents)
-        #    check if something was found
-        if not xmldom.getElementsByTagName("seriesid"):
-            messages.error(request, "No TV Series was found with %s!" % params)
+class SearchResult (generic.View):
+    def parseTag(self, tagname, node):
+        try:
+            result = node.getElementsByTagName(tagname)[0].firstChild.nodeValue
+        except:
+            result = ""
+        return result;
+
+    def parseSeries (self, seriesList):
+        results = []
+        for node in seriesList:
+            id          = self.parseTag("seriesid", node)
+            name        = self.parseTag("SeriesName", node)
+            alias       = self.parseTag("AliasNames", node)
+            banner      = self.parseTag("banner", node)
+            overview    = self.parseTag("Overview", node)
+            firstAired  = self.parseTag("FirstAired", node)
+            network     = self.parseTag("Network", node)
+            results.append( {'id'       : id,
+                             'name'     : name,
+                             'alias'    : alias,
+                             'banner'   : banner,
+                             'overview' : overview,
+                             'firstAired' : firstAired,
+                             'network'  : network} )
+        return results
+
+    def post(self, request):
+        if 'seriesName' in request.POST and request.POST['seriesName']:
+            #    create URL
+            params = urllib.parse.urlencode({'seriesname': request.POST['seriesName']})
+            url = "http://thetvdb.com/api/GetSeries.php?%s" % params
+
+            #    load data from url
+            with urllib.request.urlopen(url) as f:
+                contents = f.read().decode('utf-8')
+            xmldom = minidom.parseString(contents)
+
+            #    check if something was found
+            SeriesList = xmldom.getElementsByTagName("Series") 
+            if not Series:
+                messages.error(request, "No TV Series was found with %s!" % params)
+                return HttpResponseRedirect('/distracted/search/')
+            #    parse XML and render results
+            results = self.parseSeries(SeriesList)
+            return render(request, 'distracted/searchResult.html',
+                {'seriesList' : results})
+        else:
+            messages.error(request, "You submitted an empty form!")
             return HttpResponseRedirect('/distracted/search/')
-        #    parse results
-        seriesId    = xmldom.getElementsByTagName("seriesid")[0].firstChild.nodeValue
-        seriesName  = xmldom.getElementsByTagName("SeriesName")[0].firstChild.nodeValue
-        seriesAired = xmldom.getElementsByTagName("FirstAired")[0].firstChild.nodeValue
-        seriesOverview = xmldom.getElementsByTagName("Overview")[0].firstChild.nodeValue
-        #    create context and render result
-        return render(request, 'distracted/searchResult.html',
-            {'seriesId'         : seriesId,
-             'seriesName'       : seriesName,
-             'seriesOverview'   : seriesOverview,
-             'seriesAired'      : seriesAired})
-    else:
-        messages.error(request, "You submitted an empty form!")
-        return HttpResponseRedirect('/distracted/search/')
+
+class SearchDetail (generic.View):
+    def get(self, request, seriesid):
+        return HttpResponse("You chose id: #%s" % seriesid)

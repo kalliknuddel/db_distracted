@@ -7,22 +7,27 @@
 <div class="container">
     <p><b>Results</b></p>
 
-    <p class="seriesHead">
-        {{ seriesId }}: {{ seriesName }}
-    </p>
+    {% for series in seriesList %}
+        <div>
+            <p class="seriesHead">
+                <a href="{% url 'distracted:searchDetail' series.id %}">
+                {{ series.id }}: {{ series.name }}
+                </a>
+            </p>
 
+                <p class="alias">
+                    {{ series.alias }}
+                </p>
 
-    {% if seriesAired %}
-        <p class="seriesAired">
-            {{ seriesAired }}
-        </p>
-    {% endif %}
+                <p class="seriesNetwork">
+                    {{ series.firstAired }} - {{ series.network }}
+                </p>
 
-    {% if seriesOverview %}
-        <p class="seriesOverview">
-            {{ seriesOverview }}
-        </p>
-    {% endif %}
+                <p class="seriesOverview">
+                    {{ series.overview }}
+                </p>
+        </div>
+    {% endfor %}
 </div>
 
 
