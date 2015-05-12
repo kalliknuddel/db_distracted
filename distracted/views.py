@@ -11,7 +11,7 @@ import zipfile
 from xml.dom import minidom
 
 from .models import Series
-
+    
 
 class IndexView (generic.ListView):
     template_name = 'distracted/index.html'
@@ -83,14 +83,59 @@ class SearchResult (generic.View):
         return HttpResponseRedirect('/distracted/search/')
 
 class SearchDetail (generic.View):
-    def get(self, request, seriesid):
+    def getData (self, seriesid):
         url = "http://thetvdb.com/api/20EE1583110A3BA2/series/%s/all/en.zip" % seriesid
+        local_filename, headers = urllib.request.urlretrieve(url)
+        archive = zipfile.ZipFile(local_filename, "r")
+        xmldata = archive.read("en.xml")
+        xmlactors = archive.read("actors.xml")
+        return (xmldata, xmlactors)
+    
+    def parseTag (self, tagname, node):
         try:
-            local_filename, headers = urllib.request.urlretrieve(url)
-            archive = zipfile.ZipFile(local_filename, "r")
-            xmldata = archive.read("en.xml")
-            xmlactors = archive.read("actors.xml")
-            return HttpResponse (xmldata)
+            result = node.getElementsByTagName(tagname)[0].firstChild.nodeValue
+        except:
+            result = ""
+        return result;
+    
+    def parseSeries (self, domSeries):
+        results = []
+        for node in domSeries:
+            id          = self.parseTag("id", node)
+            name        = self.parseTag("SeriesName", node)
+            banner      = self.parseTag("banner", node)
+            overview    = self.parseTag("Overview", node)
+            firstAired  = self.parseTag("FirstAired", node)
+            network     = self.parseTag("Network", node)
+            rating      = self.parseTag("Rating", node)
+            ratingCount = self.parseTag("RatingCount", node)
+            status      = self.parseTag("Status", node)
+            runtime     = self.parseTag("Runtime", node)
+            lastUpdate  = self.parseTag("lastupdated", node)
+            results.append( {'id'       : id,
+                             'name'     : name,
+                             'banner'   : banner,
+                             'overview' : overview,
+                             'firstAired' : firstAired,
+                             'network'  : network,
+                             'rating'   : rating,
+                             'ratingCount' : ratingCount,
+                             'status'   : status,
+                             'runtime'  : runtime,
+                             'lastUpdate' : lastUpdate} )
+        return results
+
+    def get(self, request, seriesid):
+        try:
+            data, actors = self.getData(seriesid)
+            #    parse xml string
+            domData   = minidom.parseString(data)
+            domActors = minidom.parseString(actors)
+            #    create DOM Objects for series and episode data
+            seriesNodes  = domData.getElementsByTagName("Series")
+            episodeNodes = domData.getElementsByTagName("Episode")
+            seriesData = self.parseSeries (seriesNodes)
+            return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0]})
         except urllib.error.HTTPError as e:
             HttpResponse ("HTTP Error: " + str(e.code) + str(url))
         except urllib.error.URLError as e:

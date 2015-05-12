@@ -11,6 +11,7 @@
         <div>
             <img src="http://thetvdb.com/banners/{{ series.banner }}" />
 
+            {# placed here because it floats right #}
             <p class="alias">
                 {{ series.alias }}
             </p>
@@ -30,6 +31,7 @@
                 {{ series.overview }}
             </p>
         </div>
+        <hr />
     {% endfor %}
 </div>
 
