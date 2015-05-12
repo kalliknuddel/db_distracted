@@ -191,7 +191,7 @@ class SearchSave (SearchDetail):
             try:
                 season = Season.objects.get(season_id = episode["season_id"])
             except ObjectDoesNotExist as err:
-                Season.objects.create (
+                season = Season.objects.create (
                                        season_id = episode["season_id"],
                                        series_id = s,
                                        seasonNumber = episode["seasonNumber"]

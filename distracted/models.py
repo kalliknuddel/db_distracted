@@ -13,7 +13,7 @@ class Series (models.Model):
     
     series_id   = models.IntegerField()
     name        = models.CharField (max_length=100)
-    overview    = models.CharField (max_length=400)
+    overview    = models.CharField (max_length=1500)
     banner      = models.URLField ()
     first_aired = models.DateField ("FirstAired")
     network     = models.CharField (max_length=50, default='')
@@ -29,7 +29,7 @@ class Series (models.Model):
 class Season (models.Model):
     season_id = models.IntegerField (primary_key=True)
     series_id = models.ForeignKey (Series)
-    seasonNumber = models.IntegerField (unique=True)
+    seasonNumber = models.IntegerField (default=0)
 
 
 class Episode (models.Model):
