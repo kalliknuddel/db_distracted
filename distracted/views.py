@@ -124,18 +124,37 @@ class SearchDetail (generic.View):
                              'runtime'  : runtime,
                              'lastUpdate' : lastUpdate} )
         return results
+    
+    def parseEpisodes (self, domEpisodes):
+        results = []
+        for node in domEpisodes:
+            results.append ({
+            'id'              : self.parseTag("id", node),
+            'director'        : self.parseTag("Director", node),
+            'episodeName'     : self.parseTag("EpisodeName", node),
+            'firstAired'      : self.parseTag("FirstAired", node),
+            'rating'          : self.parseTag("Rating", node),
+            'ratingCount'     : self.parseTag("RatingCount", node),
+            'episodeNumber'   : self.parseTag("EpisodeNumber", node),
+            'seasonNumber'    : self.parseTag("SeasonNumber", node),
+            'seasonid'        : self.parseTag("seasonid", node),
+            'seriesid'        : self.parseTag("seriesid", node)
+            })
+        return results
 
     def get(self, request, seriesid):
         try:
             data, actors = self.getData(seriesid)
-            #    parse xml string
+            #    parse xml string to DOM object
             domData   = minidom.parseString(data)
             domActors = minidom.parseString(actors)
             #    create DOM Objects for series and episode data
-            seriesNodes  = domData.getElementsByTagName("Series")
-            episodeNodes = domData.getElementsByTagName("Episode")
-            seriesData = self.parseSeries (seriesNodes)
-            return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0]})
+            seriesNodes  = domData.getElementsByTagName ("Series")
+            episodeNodes = domData.getElementsByTagName ("Episode")
+            #    parse DOMs for data, returns lists
+            seriesData   = self.parseSeries (seriesNodes)
+            episodesData = self.parseEpisodes (episodeNodes)
+            return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0], "episodes" : episodesData})
         except urllib.error.HTTPError as e:
             HttpResponse ("HTTP Error: " + str(e.code) + str(url))
         except urllib.error.URLError as e:

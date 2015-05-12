@@ -1,6 +1,5 @@
 
 {% load staticfiles %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
 
 
@@ -33,9 +32,38 @@
             last updated: {{ series.lastUpdate }}
         </p>
 
-            <p class="seriesOverview">
-                {{ series.overview }}
-            </p>
+        <p class="seriesOverview">
+            {{ series.overview }}
+        </p>
+        
+        <table>
+            <tr class="oddTable">
+                <td >Id</td>
+                <td>Season</td>
+                <td>Episode</td>
+                <td>Title</td>
+                <td>Director</td>
+                <td>Aired</td>
+                <td>Rating</td>
+                <td>Voters</td>
+                <td>SeasonID</td>
+                <td>SeriesID</td>
+            </tr>
+            {% for episode in episodes %}
+            <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
+                <td>{{ episode.id }}</td>
+                <td>{{ episode.seasonNumber }}</td>
+                <td>{{ episode.episodeNumber }}</td>
+                <td>{{ episode.episodeName }}</td>
+                <td>{{ episode.director }}</td>
+                <td>{{ episode.firstAired }}</td>
+                <td>{{ episode.rating }}</td>
+                <td>{{ episode.ratingCount }}</td>
+                <td>{{ episode.seasonid }}</td>
+                <td>{{ episode.seriesid }}</td>
+            </tr>
+            {% endfor %}
+        </table>        
     </div>
 </div>
 

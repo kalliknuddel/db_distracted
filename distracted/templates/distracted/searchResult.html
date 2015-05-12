@@ -5,8 +5,6 @@
 
 
 <div class="container">
-    <p><b>Results</b></p>
-
     {% for series in seriesList %}
         <div>
             <img src="http://thetvdb.com/banners/{{ series.banner }}" />
@@ -22,7 +20,6 @@
                 </a>
             </p>
 
-
             <p class="seriesNetwork">
                 {{ series.firstAired }} - {{ series.network }}
             </p>
@@ -31,7 +28,7 @@
                 {{ series.overview }}
             </p>
         </div>
-        <hr />
+        <p>&nbsp;</p>
     {% endfor %}
 </div>
 
