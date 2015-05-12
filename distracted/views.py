@@ -4,13 +4,14 @@ from django.http import Http404, HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import FormView
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 import urllib
 import tempfile
 import zipfile
 from xml.dom import minidom
 
-from .models import Series
+from .models import Series, Season, Episode, Actor, Roles
     
 
 class IndexView (generic.ListView):
@@ -101,25 +102,25 @@ class SearchDetail (generic.View):
     def parseSeries (self, domSeries):
         results = []
         for node in domSeries:
-            id          = self.parseTag("id", node)
+            series_id   = self.parseTag("id", node)
             name        = self.parseTag("SeriesName", node)
-            banner      = self.parseTag("banner", node)
             overview    = self.parseTag("Overview", node)
-            firstAired  = self.parseTag("FirstAired", node)
+            banner      = self.parseTag("banner", node)
+            first_aired = self.parseTag("FirstAired", node)
             network     = self.parseTag("Network", node)
             rating      = self.parseTag("Rating", node)
-            ratingCount = self.parseTag("RatingCount", node)
+            voters      = self.parseTag("RatingCount", node)
             status      = self.parseTag("Status", node)
             runtime     = self.parseTag("Runtime", node)
             lastUpdate  = self.parseTag("lastupdated", node)
-            results.append( {'id'       : id,
+            results.append( {'series_id': series_id,
                              'name'     : name,
                              'banner'   : banner,
                              'overview' : overview,
-                             'firstAired' : firstAired,
+                             'first_aired' : first_aired,
                              'network'  : network,
                              'rating'   : rating,
-                             'ratingCount' : ratingCount,
+                             'voters'   : voters,
                              'status'   : status,
                              'runtime'  : runtime,
                              'lastUpdate' : lastUpdate} )
@@ -134,11 +135,11 @@ class SearchDetail (generic.View):
             'episodeName'     : self.parseTag("EpisodeName", node),
             'firstAired'      : self.parseTag("FirstAired", node),
             'rating'          : self.parseTag("Rating", node),
-            'ratingCount'     : self.parseTag("RatingCount", node),
+            'voters'          : self.parseTag("RatingCount", node),
             'episodeNumber'   : self.parseTag("EpisodeNumber", node),
             'seasonNumber'    : self.parseTag("SeasonNumber", node),
-            'seasonid'        : self.parseTag("seasonid", node),
-            'seriesid'        : self.parseTag("seriesid", node)
+            'season_id'       : self.parseTag("seasonid", node),
+            'series_id'       : self.parseTag("seriesid", node)
             })
         return results
 
@@ -160,3 +161,53 @@ class SearchDetail (generic.View):
         except urllib.error.URLError as e:
             HttpResponse ("URL Error: " + str(e.reason) + str(url))
         return HttpResponse("You chose id: #%s" % seriesid)
+
+class SearchSave (SearchDetail):
+    def get (self, request, seriesid):
+        data, actors = self.getData(seriesid)
+        #    parse xml string to DOM object
+        domData   = minidom.parseString(data)
+        domActors = minidom.parseString(actors)
+        #    create DOM Objects for series and episode data
+        seriesNodes  = domData.getElementsByTagName ("Series")
+        episodeNodes = domData.getElementsByTagName ("Episode")
+        #    parse DOMs for data, returns lists
+        seriesData   = self.parseSeries (seriesNodes)
+        episodesData = self.parseEpisodes (episodeNodes)
+        s = Series.objects.create (
+            series_id   = int(seriesData[0]["series_id"]),
+            name        = seriesData[0]["name"],
+            overview    = seriesData[0]["overview"],
+            banner      = seriesData[0]["banner"],
+            first_aired = seriesData[0]["first_aired"],
+            network     = seriesData[0]["network"],
+            rating      = seriesData[0]["rating"],
+            voters      = int(seriesData[0]["voters"]),
+            runtime     = int(seriesData[0]["runtime"]),
+            lastUpdate  = int(seriesData[0]["lastUpdate"])
+            )
+        s.save()
+        for episode in episodesData:
+            try:
+                season = Season.objects.get(season_id = episode["season_id"])
+            except ObjectDoesNotExist as err:
+                Season.objects.create (
+                                       season_id = episode["season_id"],
+                                       series_id = s,
+                                       seasonNumber = episode["seasonNumber"]
+                                       )
+            e = Episode (
+                          id = episode["id"],
+                          director = episode["director"],
+                          episodeName = episode["episodeName"],
+                          firstAired = episode["firstAired"],
+                          rating = episode["rating"],
+                          voters = episode["voters"],
+                          episodeNumber = episode["episodeNumber"],
+                          season_id = season,
+                          series_id = s
+                          )
+            e.save()
+        messages.success(request, "TV Series has been saved in the DB")            
+        return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0], "episodes" : episodesData})
+

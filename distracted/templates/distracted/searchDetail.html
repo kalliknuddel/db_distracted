@@ -5,6 +5,13 @@
 
 <div class="container">
     <div>
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    
+    
         <img src="http://thetvdb.com/banners/{{ series.banner }}" />
     
         {# placed here because it floats right #}    
@@ -12,16 +19,16 @@
             {{ series.status }}
         </p>
         <p class="seriesHead">
-            {{ series.id }}: {{ series.name }}
+            {{ series.series_id }}: {{ series.name }}
         </p>
 
 
         {# placed here because it floats right #}    
         <p class="alias">
-            {{ series.rating }} - {{ series.ratingCount }} voters
+            {{ series.rating }} - {{ series.voters }} voters
         </p>
         <p class="seriesHead">
-            {{ series.firstAired }} - {{ series.network }}
+            {{ series.first_aired }} - {{ series.network }}
         </p>
 
         {# placed here because it floats right #}    
@@ -58,12 +65,14 @@
                 <td>{{ episode.director }}</td>
                 <td>{{ episode.firstAired }}</td>
                 <td>{{ episode.rating }}</td>
-                <td>{{ episode.ratingCount }}</td>
-                <td>{{ episode.seasonid }}</td>
-                <td>{{ episode.seriesid }}</td>
+                <td>{{ episode.voters }}</td>
+                <td>{{ episode.season_id }}</td>
+                <td>{{ episode.series_id }}</td>
             </tr>
             {% endfor %}
-        </table>        
+        </table>
+        
+        <p><a href={% url 'distracted:searchSave' series.series_id %}>Save in database...</a></p>        
     </div>
 </div>
 
