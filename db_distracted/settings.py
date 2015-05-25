@@ -53,7 +53,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    # maybe other here
     'django.contrib.auth.context_processors.auth',
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
@@ -72,12 +71,12 @@ WSGI_APPLICATION = 'db_distracted.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_distracted',            #    name der DB
-        'USER': 'distracted_user',          #    user der DB
-        'PASSWORD': 'tada1233',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'ENGINE'    : 'django.db.backends.mysql',
+        'NAME'      : 'db_distracted',
+        'USER'      : 'distracted_user',
+        'PASSWORD'  : 'tada1233',
+        'HOST'      : '127.0.0.1',
+        'PORT'      : '3306'
     }
 }
 
