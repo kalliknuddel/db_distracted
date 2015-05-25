@@ -6,9 +6,9 @@
 {% block content %}
 {% if series_list %}
     <div class="series">
-        {% for series in series_list %}
-        <ul class="seriesListing {% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
-            <li>
+        <ol class="seriesListing">
+            {% for series in series_list %}
+            <li class="{% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
                 <p><a href="{% url 'distracted:detail' series.id %}">
                     {{ series.name }}
                 </a></p>
@@ -16,8 +16,8 @@
                     {{ series.overview }}
                 </p>
             </li>
-        </ul>
-        {% endfor %}
+            {% endfor %}
+        </ol>
     </div>
 {% else %}
     <p>No Series are available.</p>
