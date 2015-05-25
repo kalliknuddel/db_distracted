@@ -7,3 +7,14 @@ tested on:
  - MySQL
  - PyMySQL  (pip install PyMySQL)
 
+[Git Infos]
+Commits should start with a tag that gives a basic idea on what the comment changed
+e.g.
+| migration     | changes in models, migration files |
+| view          | code changes in Views |
+| templates     | changes in template files |
+| css           | ... |
+| gitignore     | ... |
+| urls          | changes in urls.py |
+| git           | organization, readme files, etc.. |
+
