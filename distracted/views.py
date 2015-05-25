@@ -12,7 +12,7 @@ import zipfile
 from xml.dom import minidom
 
 from .models import Series, Season, Episode, Actor, Roles
-    
+
 
 class IndexView (generic.ListView):
     template_name = 'distracted/index.html'
@@ -21,9 +21,19 @@ class IndexView (generic.ListView):
     def get_queryset (self):
         return Series.objects.order_by('name')
 
-class DetailView (generic.DetailView):
+class SeriesDetail (generic.DetailView):
     model = Series
     template_name = 'distracted/detail.html'
+    
+    #    Override function to get Episode data into the django Context
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(SeriesDetail, self).get_context_data(**kwargs)
+        # Add in a QuerySet of all the episodes
+        series = self.get_object()
+        context['episodes'] = Episode.objects.filter(series_id = series )
+        return context
+
 
 def SearchSeries (request):
     return render (request, 'distracted/searchSeries.html')
