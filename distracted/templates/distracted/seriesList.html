@@ -1,0 +1,27 @@
+
+{% extends "distracted/base.html" %}
+
+{% block title %}disract_ed - All Series{% endblock %}
+
+{% block content %}
+{% if series_list %}
+    <div class="series">
+        {% for series in series_list %}
+        <ul class="seriesListing {% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
+            <li>
+                <p><a href="{% url 'distracted:detail' series.id %}">
+                    {{ series.name }}
+                </a></p>
+                <p class="seriesOverview">
+                    {{ series.overview }}
+                </p>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No Series are available.</p>
+{% endif %}
+
+
+{% endblock %}

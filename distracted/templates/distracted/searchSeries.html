@@ -1,10 +1,11 @@
 
-{% load staticfiles %}
+{% extends "distracted/base.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+{% block title %}disract_ed - Search{% endblock %}
 
+{% block content %}
 <div>
-    <p class="searchHead">Search for TV Series</p>
+    <p class="searchHead"><h2>Search for TV Series</h2></p>
 
     {% if messages %}
         {% for message in messages %}
@@ -31,3 +32,4 @@
 <div>
     <a href={% url 'distracted:index' %}>back to index</a>
 </div>
+{% endblock %}

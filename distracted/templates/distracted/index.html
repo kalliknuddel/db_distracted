@@ -4,24 +4,19 @@
 {% block title %}disract_ed - Index{% endblock %}
 
 {% block content %}
-{% if series_list %}
-    <div class="series">
-        {% for series in series_list %}
-        <ul class="seriesListing {% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
-            <li>
-                <p><a href="{% url 'distracted:detail' series.id %}">
-                    {{ series.name }}
-                </a></p>
-                <p class="seriesOverview">
-                    {{ series.overview }}
-                </p>
-            </li>
-        </ul>
-        {% endfor %}
-    </div>
-{% else %}
-    <p>No Series are available.</p>
-{% endif %}
+
+<div class="index-content">
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus bibendum venenatis eros ac commodo. Aliquam porta purus orci, ut laoreet nunc sagittis sed. Sed nisl metus, elementum vitae gravida ac, dictum eu lacus. Suspendisse dui purus, condimentum sed lacus ac, mattis maximus ante. Praesent tristique lectus nec elit dignissim euismod. Proin libero quam, convallis a convallis nec, volutpat vitae justo. Mauris et ante eu nisl sodales fermentum. Phasellus ac purus congue, mattis arcu laoreet, facilisis sem. Fusce sodales quis nisi eget finibus. Nulla bibendum ex sed velit lacinia commodo. Suspendisse non eros purus.
+</p>
+<p>Fusce dignissim dapibus turpis, in convallis orci pulvinar ac. Sed sem lectus, rutrum at ex ac, ultricies sollicitudin sapien. Morbi euismod leo in accumsan porta. Morbi ut lobortis lectus. Ut eu consectetur arcu. Morbi velit sapien, dignissim quis feugiat in, pulvinar et orci. In nulla tortor, imperdiet eu metus sit amet, ullamcorper feugiat nisi. Nulla id velit non tortor vestibulum venenatis. Donec porttitor libero lorem, nec euismod velit dapibus vitae. Ut non turpis ultricies, blandit purus id, euismod orci.
+</p>
+<p>Morbi et lacinia nulla. Etiam porta placerat tincidunt. Ut posuere ex ac augue semper, sed aliquet leo mollis. In hac habitasse platea dictumst. Vestibulum sed odio in nibh ultricies vulputate. Curabitur lacus tortor, feugiat non mattis id, viverra et quam. Integer quis risus id est elementum ullamcorper. Nam fermentum ultrices malesuada. Nam vestibulum urna nibh, a mattis risus elementum eget. Praesent justo nulla, efficitur in ornare eget, bibendum ut felis. Vestibulum efficitur felis nec sollicitudin tincidunt. Praesent consequat luctus congue. Donec condimentum maximus ligula in tincidunt. Morbi at sem at turpis gravida bibendum.
+</p>
+<p>Donec gravida risus ex, ac luctus metus ornare sit amet. Curabitur efficitur, nulla quis auctor euismod, velit dolor facilisis leo, a malesuada enim dui nec nulla. Donec hendrerit ac felis quis interdum. Donec dapibus mollis massa, ut imperdiet purus volutpat ac. Praesent finibus purus id ante faucibus, vitae vehicula magna pretium. Donec risus eros, dignissim nec libero sit amet, porta posuere massa. Pellentesque at faucibus mauris. Nulla efficitur, sapien in interdum tincidunt, elit felis aliquet elit, ut tempus elit mauris vel mauris. Vivamus tempor magna fermentum finibus faucibus. Ut a cursus justo. Nunc accumsan, nisl pulvinar porttitor condimentum, purus mi pellentesque nulla, a semper arcu ipsum pulvinar risus.
+</p>
+<p>Fusce hendrerit enim eget risus luctus, at dapibus odio finibus. Mauris scelerisque leo at ante cursus, nec pulvinar erat euismod. Integer ultrices feugiat commodo. Morbi scelerisque elit non ullamcorper convallis. Vivamus ac ultrices quam, eget venenatis ex. Cras sodales feugiat quam, et suscipit purus tristique feugiat. Nulla dignissim nec mauris id convallis. Sed sit amet ipsum lectus. Curabitur sed sapien nulla. Cras eget viverra augue. Donec condimentum enim eget imperdiet dignissim. Vivamus non enim sit amet ligula suscipit ultricies quis in mauris.
+</p>
+</div>
 
 <div class="back">
     <a href="{% url 'distracted:search' %}">Add another TV Series</a>

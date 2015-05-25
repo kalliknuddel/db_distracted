@@ -1,8 +1,9 @@
 
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+{% extends "distracted/base.html" %}
 
+{% block title %}disract_ed - Search{% endblock %}
 
+{% block content %}
 <div class="container">
     <div>
         {% if messages %}
@@ -82,3 +83,4 @@
         go back
     </a>
 </div>
+{% endblock %}

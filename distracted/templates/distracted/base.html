@@ -9,7 +9,7 @@
 <body>
     <div class="banner">
         {% block banner %}
-            <p class="logo">Distract_ED</p>
+            <p class="logo"><a href="{% url 'distracted:realIndex' %}">Distract_ED</a></p>
             <div class="nav-menu">
                 <ul> 
                     <li class="nav-menu-item"><a href="{% url 'distracted:index' %}">All Series</a></li>
@@ -19,6 +19,7 @@
         {% endblock %}
     </div>
 <hr>
+
     <div class="navigation">
         {% block navigation %}
         QuickNav - Number of Series: #{{ series_count }}
@@ -30,6 +31,7 @@
         {% endfor %}
         </ul>
         
+        <a href="{% url 'distracted:index' %}">List all Series</a>
         {% endblock %}
     </div>
 

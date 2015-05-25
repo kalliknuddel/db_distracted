@@ -1,10 +1,12 @@
 
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+{% extends "distracted/base.html" %}
 
+{% block title %}disract_ed - Search{% endblock %}
+
+{% block content %}
 <div class="container">
     {% for series in seriesList %}
-        <div>
+        <div class="searchResultSeries">
             <img src="http://thetvdb.com/banners/{{ series.banner }}" />
 
             {# placed here because it floats right #}
@@ -36,3 +38,4 @@
         go back
     </a>
 </div>
+{% endblock %}
