@@ -14,8 +14,11 @@ from xml.dom import minidom
 from .models import Series, Season, Episode, Actor, Roles
 
 
-class IndexView (generic.ListView):
-    template_name = 'distracted/index.html'
+def IndexView (request):
+    return render (request, 'distracted/index.html')
+    
+class SeriesList (generic.ListView):
+    template_name = 'distracted/seriesList.html'
     context_object_name = 'series_list'
 
     def get_queryset (self):
@@ -23,7 +26,7 @@ class IndexView (generic.ListView):
 
 class SeriesDetail (generic.DetailView):
     model = Series
-    template_name = 'distracted/detail.html'
+    template_name = 'distracted/seriesDetail.html'
     
     #    Override function to get Episode data into the django Context
     def get_context_data(self, **kwargs):

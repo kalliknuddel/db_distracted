@@ -6,7 +6,9 @@ from django.conf.urls.i18n import urlpatterns
 urlpatterns = [
                #    /distracted/
                #    index list view
-               url (r'^$', views.IndexView.as_view(), name = 'index'),
+               url (r'^$', views.IndexView, name = 'realIndex'),
+
+               url (r'^list/$',             views.SeriesList.as_view(),     name = 'index'),
 
                #    search stuff
                url (r'^search/$',           views.SearchSeries,             name = 'search'),
