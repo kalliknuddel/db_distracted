@@ -3,28 +3,74 @@
 <link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
 
 <div class="container">
-
-    <p class="seriesHead">
-        {{ series.name }}
-    </p>
-
-    {% if series_list %}
-        <p class="seriesAlias">
-            {{ series.alias }}
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    
+    
+        <img src="http://thetvdb.com/banners/{{ series.banner }}" />
+    
+        {# placed here because it floats right #}    
+        <p class="alias">
+            {{ series.status }}
         </p>
-    {% endif %}
-
-    {% if series_list %}
-        <p class="seriesAired">
-            {{ series.first_aired }}
+        <p class="seriesHead">
+            {{ series.series_id }}: {{ series.name }}
         </p>
-    {% endif %}
 
-    {% if series.overview %}
+
+        {# placed here because it floats right #}    
+        <p class="alias">
+            {{ series.rating }} - {{ series.voters }} voters
+        </p>
+        <p class="seriesHead">
+            {{ series.first_aired }} - {{ series.network }}
+        </p>
+
+        {# placed here because it floats right #}    
+        <p class="alias">
+            Runtime: {{ series.runtime }} min
+        </p>
+        <p class="seriesHead">
+            last updated: {{ series.lastUpdate }}
+        </p>
+
         <p class="seriesOverview">
             {{ series.overview }}
         </p>
-    {% endif %}
+        
+        <table>
+            <tr class="oddTable">
+                <td>Id</td>
+                <td>Season</td>
+                <td>Episode</td>
+                <td>Title</td>
+                <td>Director</td>
+                <td>Aired</td>
+                <td>Rating</td>
+                <td>Voters</td>
+                <td>SeasonID</td>
+                <td>SeriesID</td>
+            </tr>
+            {% for episode in episodes %}
+            <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
+                <td>{{ episode.id }}</td>
+                <td>{{ episode.season_id.seasonNumber }}</td>
+                <td>{{ episode.episodeNumber }}</td>
+                <td>{{ episode.episodeName }}</td>
+                <td>{{ episode.director }}</td>
+                <td>{{ episode.firstAired }}</td>
+                <td>{{ episode.rating }}</td>
+                <td>{{ episode.voters }}</td>
+                <td>{{ episode.season_id_id }}</td>
+                <td>{{ episode.series_id_id }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
 
