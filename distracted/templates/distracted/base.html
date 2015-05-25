@@ -12,7 +12,8 @@
             <p class="logo"><a href="{% url 'distracted:realIndex' %}">Distract_ED</a></p>
             <div class="nav-menu">
                 <ul> 
-                    <li class="nav-menu-item"><a href="{% url 'distracted:index' %}">All Series</a></li>
+                    <li class="nav-menu-item"><a href="{% url 'distracted:index' %}">List Series</a></li>
+                    <li class="nav-menu-item"><a href="{% url 'distracted:indexBanners' %}">List Banners</a></li>
                     <li class="nav-menu-item"><a href="{% url 'distracted:search' %}">Add new TV-Series</a></li>
                 </ul>
             </div>
@@ -22,16 +23,17 @@
 
     <div class="navigation">
         {% block navigation %}
-        QuickNav - Number of Series: #{{ series_count }}
+        Number of Series: #{{ series_count }}
         
         {# List Series Data #}
-        <ul>
+        <ol>
         {% for obj in series_data %}
             <li><a href="{% url 'distracted:detail' obj.id %}">{{ obj.name }}</a></li>
         {% endfor %}
-        </ul>
+        </ol>
         
-        <a href="{% url 'distracted:index' %}">List all Series</a>
+        <a href="{% url 'distracted:index' %}">List all Series</a><br />
+        <a href="{% url 'distracted:indexBanners' %}">List Banners</a>
         {% endblock %}
     </div>
 
