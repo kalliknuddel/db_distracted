@@ -23,6 +23,9 @@ class SeriesList (generic.ListView):
 
     def get_queryset (self):
         return Series.objects.order_by('name')
+    
+class SeriesListBanners (SeriesList):
+    template_name = 'distracted/seriesListBanners.html'
 
 class SeriesDetail (generic.DetailView):
     model = Series
@@ -213,7 +216,7 @@ class SearchSave (SearchDetail):
                           id = episode["id"],
                           director = episode["director"],
                           episodeName = episode["episodeName"],
-                          firstAired = episode["firstAired"],
+                          firstAired = episode["firstAired"] or None,
                           rating = episode["rating"],
                           voters = episode["voters"],
                           episodeNumber = episode["episodeNumber"],

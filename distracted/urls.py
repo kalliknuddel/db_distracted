@@ -9,6 +9,7 @@ urlpatterns = [
                url (r'^$', views.IndexView, name = 'realIndex'),
 
                url (r'^list/$',             views.SeriesList.as_view(),     name = 'index'),
+               url (r'^list/banners/$',             views.SeriesListBanners.as_view(),     name = 'indexBanners'),
 
                #    search stuff
                url (r'^search/$',           views.SearchSeries,             name = 'search'),

@@ -1,6 +1,7 @@
 
 body {
     font-family:    "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+    font-size:  0.9em
 }
 
 a {
@@ -9,7 +10,9 @@ a {
 
 
 img {
-    width:  100%;
+    margin-left:    auto;
+    margin-right:   auto;
+    display:        block;
 }
 
 
@@ -49,6 +52,9 @@ td {
     float:      left;
     width:      17%;
 }
+.navigation ol li {
+    margin:     2px;
+}
 
 .content {
     float:      right;
@@ -77,10 +83,22 @@ td {
     padding-left: 5%;
 }
 
+.seriesListingBanners li {
+    display:    inline;
+}
+.seriesListingBanners img {
+    width:      49%;
+    display:    inline;
+}
+
 .searchResultSeries {
     width:      90%;
     padding-bottom: 10px;
     padding-left:       2%;
+}
+
+.searchHead {
+    float:  left;
 }
 
 .alias {
@@ -89,7 +107,7 @@ td {
 }
 
 #   list view differences
-.ulFirst {
+li.ulFirst {
     background-color: #eee;
 }
 .oddTable {
@@ -98,7 +116,4 @@ td {
 
 .seriesOverview {
     padding-left:   10%;
-}
-
-.searchHead {
 }
