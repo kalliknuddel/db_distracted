@@ -1,11 +1,13 @@
 
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+{% extends "distracted/base.html" %}
 
+{% block title %}disract_ed - Index{% endblock %}
+
+{% block content %}
 {% if series_list %}
     <div class="series">
         {% for series in series_list %}
-        <ul class="{% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
+        <ul class="seriesListing {% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
             <li>
                 <p><a href="{% url 'distracted:detail' series.id %}">
                     {{ series.name }}
@@ -24,3 +26,5 @@
 <div class="back">
     <a href="{% url 'distracted:search' %}">Add another TV Series</a>
 </div>
+
+{% endblock %}
