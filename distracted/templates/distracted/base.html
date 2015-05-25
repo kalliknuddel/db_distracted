@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%  load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'distracted/style.css' %}" />
+    <title>{% block title %}distract_ed{% endblock %}</title>
+</head>
+
+<body>
+    <div class="banner">
+        {% block banner %}
+            <p class="logo">Distract_ED</p>
+            <div class="nav-menu">
+                <ul> 
+                    <li class="nav-menu-item"><a href="{% url 'distracted:index' %}">All Series</a></li>
+                    <li class="nav-menu-item"><a href="{% url 'distracted:search' %}">Add new TV-Series</a></li>
+                </ul>
+            </div>
+        {% endblock %}
+    </div>
+<hr>
+    <div class="navigation">
+        {% block navigation %}
+        QuickNav - Number of Series: #{{ series_count }}
+        
+        {# List Series Data #}
+        <ul>
+        {% for obj in series_data %}
+            <li><a href="{% url 'distracted:detail' obj.id %}">{{ obj.name }}</a></li>
+        {% endfor %}
+        </ul>
+        
+        {% endblock %}
+    </div>
+
+    <div class="content">
+        {% block content %}
+        Well, hello there ;)
+        {% endblock %}
+    </div>
+</body>
+</html>
