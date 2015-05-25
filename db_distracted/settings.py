@@ -52,6 +52,16 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # maybe other here
+    'django.contrib.auth.context_processors.auth',
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    'distracted.app.context_processors.series_data',
+    'distracted.app.context_processors.series_count',
+)
+
 ROOT_URLCONF = 'db_distracted.urls'
 
 WSGI_APPLICATION = 'db_distracted.wsgi.application'
