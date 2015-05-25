@@ -1,26 +1,12 @@
 
-
-div {
-    padding:    25px;
-    border:     1px solid navy;
-    margin:     10px;
-    width:      90%;
-    position:   relative;
-    top:        30px;
-    left:       2%;
+body {
+    font-family:    "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 }
-
 
 a {
     color: blue;
 }
 
-
-ul {
-    width:      50%;
-    padding:    2px;
-    padding-left: 5%;
-}
 
 img {
     width:  100%;
@@ -39,6 +25,36 @@ td {
     margin:         0px;
 }
 
+.banner {
+    #position:   absolute;
+    display:    table;
+    padding:    0 4%;
+    margin:     0 auto;
+}
+.logo {
+    position:   relative;
+    width:      200px;
+    float:      left;
+}
+.nav-menu {
+    position:   relative;
+    float:      right;
+}
+.nav-menu-item {
+    display:    inline;
+    padding:    20px;
+}
+
+.navigation {
+    float:      left;
+    width:      20%;
+}
+
+.content {
+    float:      right;
+    width:      80%;
+}
+
 
 .container {
     padding-bottom:     50px;
@@ -49,6 +65,12 @@ td {
     display: inline;
     list-style-type: none;
     padding-right: 20px;
+}
+
+.seriesListing {
+    width:      70%;
+    padding:    2px;
+    padding-left: 5%;
 }
 
 .alias {
