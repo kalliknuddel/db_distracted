@@ -31,7 +31,7 @@ class SeriesDetail (generic.DetailView):
         context = super(SeriesDetail, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the episodes
         series = self.get_object()
-        context['episodes'] = Episode.objects.filter(series_id = series )
+        context['episodes'] = Episode.objects.filter(series_id=series).order_by("season_id__seasonNumber", "episodeNumber")
         return context
 
 
