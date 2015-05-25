@@ -10,8 +10,7 @@ class Series (models.Model):
                    (RUNNING, "Running"),
                    (DISCONTINUED, "Discontinued"),
                    )
-    
-    series_id   = models.IntegerField()
+    series_id   = models.IntegerField(unique=True)
     name        = models.CharField (max_length=100)
     overview    = models.CharField (max_length=1500)
     banner      = models.URLField ()
@@ -36,7 +35,7 @@ class Episode (models.Model):
     id          = models.IntegerField (primary_key=True)
     director    = models.CharField (max_length=100)
     episodeName = models.CharField (max_length=100)
-    firstAired  = models.DateField ("FirstAired")
+    firstAired  = models.DateField ("FirstAired", null=True, blank=True)
     rating      = models.CharField (max_length=100)
     voters      = models.CharField (max_length=100)
     episodeNumber = models.IntegerField ()
