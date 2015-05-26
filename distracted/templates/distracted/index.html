@@ -6,6 +6,14 @@
 {% block content %}
 
 <div class="index-content">
+
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    
+
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus bibendum venenatis eros ac commodo. Aliquam porta purus orci, ut laoreet nunc sagittis sed. Sed nisl metus, elementum vitae gravida ac, dictum eu lacus. Suspendisse dui purus, condimentum sed lacus ac, mattis maximus ante. Praesent tristique lectus nec elit dignissim euismod. Proin libero quam, convallis a convallis nec, volutpat vitae justo. Mauris et ante eu nisl sodales fermentum. Phasellus ac purus congue, mattis arcu laoreet, facilisis sem. Fusce sodales quis nisi eget finibus. Nulla bibendum ex sed velit lacinia commodo. Suspendisse non eros purus.
 </p>
 <p>Fusce dignissim dapibus turpis, in convallis orci pulvinar ac. Sed sem lectus, rutrum at ex ac, ultricies sollicitudin sapien. Morbi euismod leo in accumsan porta. Morbi ut lobortis lectus. Ut eu consectetur arcu. Morbi velit sapien, dignissim quis feugiat in, pulvinar et orci. In nulla tortor, imperdiet eu metus sit amet, ullamcorper feugiat nisi. Nulla id velit non tortor vestibulum venenatis. Donec porttitor libero lorem, nec euismod velit dapibus vitae. Ut non turpis ultricies, blandit purus id, euismod orci.
