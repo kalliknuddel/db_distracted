@@ -1,13 +1,17 @@
 
-distraced
+distrac_ed
+=========
 
 tested on:
+--------------
  - Ubuntu 15.04
  - Python3
  - MySQL
  - PyMySQL  (pip install PyMySQL)
+ - Django 1.7
 
-[Git Infos]
+Git Infos
+-----------
 Commits should start with a tag that gives a basic idea on what the comment changed
 e.g.
 
