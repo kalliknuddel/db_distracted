@@ -20,7 +20,7 @@ class Series (models.Model):
     voters      = models.IntegerField (default=0)
     runtime     = models.IntegerField (default=0)
     lastUpdate  = models.IntegerField (default=0)
-    status      = models.CharField (max_length=15, choices=StatusTypes, default='running')
+    status      = models.CharField (max_length=15, choices=StatusTypes, default='RUNNING')
 
     def __str__ (self):
         return self.name
