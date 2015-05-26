@@ -16,7 +16,7 @@ from .models import Series, Season, Episode, Actor, Roles
 
 def IndexView (request):
     return render (request, 'distracted/index.html')
-    
+
 class SeriesList (generic.ListView):
     template_name = 'distracted/seriesList.html'
     context_object_name = 'series_list'
@@ -39,7 +39,17 @@ class SeriesDetail (generic.DetailView):
         series = self.get_object()
         context['episodes'] = Episode.objects.filter(series_id=series).order_by("season_id__seasonNumber", "episodeNumber")
         return context
-
+    
+class SeriesDelete (generic.DetailView):
+    model = Series
+    template_name = 'distracted/index.html'
+    
+    def get (self, request, pk):
+       object = super(SeriesDelete, self).get_object()
+       message = "This series got removed from the database: " + str(object.id) + ", " + object.name 
+       messages.info(request, message)
+       object.delete()
+       return render(request, self.template_name)
 
 def SearchSeries (request):
     return render (request, 'distracted/searchSeries.html')
@@ -223,7 +233,9 @@ class SearchSave (SearchDetail):
                           season_id = season,
                           series_id = s
                           )
-            e.save()
+            #    force insert, otherwise Django will use update if the Series already is saved once
+            #    This way, an error get's thrown when the user tries to insert the same series twice
+            e.save(force_insert=True)
         messages.success(request, "TV Series has been saved in the DB")            
         return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0], "episodes" : episodesData})
 
