@@ -63,6 +63,7 @@ td {
 .navigation {
     float:      left;
     width:      17%;
+    font-size:  0.9em;
 }
 .navigation ol li {
     margin:     2px;
