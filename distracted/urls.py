@@ -19,5 +19,10 @@ urlpatterns = [
 
                #    /distracted/5/
                #    detailed view
-               url (r'^(?P<pk>[0-9]+)/$', views.SeriesDetail.as_view(), name='detail')
+               url (r'^(?P<pk>[0-9]+)/$', views.SeriesDetail.as_view(), name='detail'),
+               url (r'^(?P<pk>[0-9]+)/delete/$', views.SeriesDelete.as_view(), name='delete'),
+               
+               #    django's auth model
+               url('^', include('django.contrib.auth.urls')),
+
 ]
