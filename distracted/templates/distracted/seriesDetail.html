@@ -43,6 +43,12 @@
             {{ series.overview }}
         </p>
         
+        <p>
+            <ul class="dbActions">
+                <li><a class="linkUpdate">Update Data</a></li>
+                <li><a class="linkDelete" href="{% url 'distracted:delete' series.id %}">Remove from Database</a></li>
+            </ul></p>
+        
         <table>
             <tr class="oddTable">
                 <td>Id</td>
