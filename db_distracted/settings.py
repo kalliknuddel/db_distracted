@@ -40,16 +40,15 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -59,6 +58,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     'distracted.app.context_processors.series_data',
     'distracted.app.context_processors.series_count',
+    'django.contrib.messages.context_processors.messages',
 )
 
 ROOT_URLCONF = 'db_distracted.urls'
