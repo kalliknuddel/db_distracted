@@ -90,7 +90,7 @@
             <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
                 <td>{{ role.actor.actor_id }}</td>
                 <td>{{ role.image }}</td>
-                <td>{{ role.actor.name }}</td>
+                <td><a href="{% url 'distracted:actorsDetail' role.actor.id %}">{{ role.actor.name }}</a></td>
                 <td>{{ role.name }}</td>
                 <td>{{ role.sort_order }}</td>
             </tr>

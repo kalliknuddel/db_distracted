@@ -9,7 +9,9 @@ urlpatterns = [
                url (r'^$', views.IndexView, name = 'realIndex'),
 
                url (r'^list/$',             views.SeriesList.as_view(),     name = 'index'),
-               url (r'^list/banners/$',             views.SeriesListBanners.as_view(),     name = 'indexBanners'),
+               url (r'^list/banners/$',            views.SeriesListBanners.as_view(),     name = 'indexBanners'),
+               url (r'^list/actors/$',             views.ActorsList.as_view(),     name = 'indexActors'),
+               url (r'^list/actors/(?P<pk>[0-9]+)/$',             views.ActorDetail.as_view(),     name = 'actorsDetail'),
 
                #    search stuff
                url (r'^search/$',           views.SearchSeries,             name = 'search'),
@@ -21,7 +23,7 @@ urlpatterns = [
                #    detailed view
                url (r'^(?P<pk>[0-9]+)/$', views.SeriesDetail.as_view(), name='detail'),
                url (r'^(?P<pk>[0-9]+)/delete/$', views.SeriesDelete.as_view(), name='delete'),
-               
+
                #    django's auth model
                url('^', include('django.contrib.auth.urls')),
 

@@ -1,0 +1,44 @@
+{% extends "distracted/base.html" %}
+
+{% block title %}disract_ed - {{ actor.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        
+        <h2>{{ actor.name }}</h2>
+
+        <table width="70%">
+            <tr class="oddTable">
+                <td>Id</td>
+                <td>Role</td>
+                <td>SortOrder</td>
+                <td>ImageURL</td>
+            </tr>
+            {% for role in roles %}
+            <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
+                <td>{{ role.actor.actor_id }}</td>
+                <td>{{ role.actor.name }}</td>
+                <td>{{ role.sort_order }}</td>
+                <td>{{ role.image }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+</div>
+
+
+<div class="back">
+    <a href={% url 'distracted:indexActors' %}>
+        go back
+    </a>
+</div>
+
+{% endblock %}
+

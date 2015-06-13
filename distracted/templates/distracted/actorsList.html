@@ -1,0 +1,24 @@
+
+{% extends "distracted/base.html" %}
+
+{% block title %}disract_ed - All Actors{% endblock %}
+
+{% block content %}
+{% if actors_list %}
+    <div class="series">
+        <ol class="seriesListing">
+            {% for actor in actors_list %}
+            <li class="{% if forloop.counter|divisibleby:2 %}ulFirst{% else %}ulSecond{% endif %}">
+                <p><a href="{% url 'distracted:actorsDetail' actor.id %}">
+                    {{ actor.id }} -- {{ actor.name }} -- {{ actor.actor_id }}
+                </a></p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+{% else %}
+    <p>No Actors are available.</p>
+{% endif %}
+
+
+{% endblock %}
