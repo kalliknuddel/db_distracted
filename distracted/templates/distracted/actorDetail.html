@@ -23,9 +23,9 @@
             {% for role in roles %}
             <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
                 <td>{{ role.actor.actor_id }}</td>
-                <td>{{ role.actor.name }}</td>
+                <td>{{ role.name }}</td>
                 <td>{{ role.sort_order }}</td>
-                <td>{{ role.image }}</td>
+                <td><img src="http://thetvdb.com/banners/{{ role.image }}" /></td>
             </tr>
             {% endfor %}
         </table>
