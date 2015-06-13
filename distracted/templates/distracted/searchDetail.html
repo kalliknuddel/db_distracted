@@ -72,7 +72,26 @@
             </tr>
             {% endfor %}
         </table>
-        
+
+        <table width="70%">
+            <tr class="oddTable">
+                <td>Id</td>
+                <td>ImageURL</td>
+                <td>Name</td>
+                <td>Role</td>
+                <td>SortOrder</td>
+            </tr>
+            {% for actor in actors %}
+            <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
+                <td>{{ actor.id }}</td>
+                <td>{{ actor.Image }}</td>
+                <td>{{ actor.Name }}</td>
+                <td>{{ actor.Role }}</td>
+                <td>{{ actor.SortOrder }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
         <p><a href={% url 'distracted:searchSave' series.series_id %}>Save in database...</a></p>        
     </div>
 </div>

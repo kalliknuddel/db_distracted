@@ -77,6 +77,26 @@
             </tr>
             {% endfor %}
         </table>
+
+        <table>
+            <tr class="oddTable">
+                <td>Id</td>
+                <td>ImageURL</td>
+                <td>Name</td>
+                <td>Role</td>
+                <td>SortOrder</td>
+            </tr>
+            {% for role in roles %}
+            <tr {% if forloop.counter|divisibleby:2 %}class="oddTable"{% endif %}>
+                <td>{{ role.actor.actor_id }}</td>
+                <td>{{ role.image }}</td>
+                <td>{{ role.actor.name }}</td>
+                <td>{{ role.name }}</td>
+                <td>{{ role.sort_order }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
     </div>
 </div>
 

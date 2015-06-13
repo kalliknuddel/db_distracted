@@ -38,6 +38,7 @@ class SeriesDetail (generic.DetailView):
         # Add in a QuerySet of all the episodes
         series = self.get_object()
         context['episodes'] = Episode.objects.filter(series_id=series).order_by("season_id__seasonNumber", "episodeNumber")
+        context['roles'] = Roles.objects.filter (series = series).order_by("sort_order", "name");
         return context
     
 class SeriesDelete (generic.DetailView):
@@ -168,20 +169,41 @@ class SearchDetail (generic.View):
             'series_id'       : self.parseTag("seriesid", node)
             })
         return results
+    
+    def parseActors (self, domActors):
+        results = []
+        for node in domActors:
+            results.append ({
+                             'id'       : self.parseTag("id", node),
+                             'Image'    : self.parseTag("Image", node),
+                             'Name'     : self.parseTag("Name", node),
+                             'Role'     : self.parseTag("Role", node),
+                             'SortOrder': self.parseTag("SortOrder", node)
+                             })
+        return results;
+    
+    def parseAllTheThings (self, seriesid):
+        data, actors = self.getData(seriesid)
+        #    parse xml string to DOM object
+        domData   = minidom.parseString(data)
+        domActors = minidom.parseString(actors)
+        #    create DOM Objects for series and episode data
+        seriesNodes  = domData.getElementsByTagName ("Series")
+        episodeNodes = domData.getElementsByTagName ("Episode")
+        actorsNodes  = domActors.getElementsByTagName("Actor")
+        #    parse DOMs for data, returns lists
+        seriesData   = self.parseSeries (seriesNodes)
+        episodesData = self.parseEpisodes (episodeNodes)
+        actorsData   = self.parseActors (actorsNodes)
+        return (seriesData, episodesData, actorsData)
 
     def get(self, request, seriesid):
         try:
-            data, actors = self.getData(seriesid)
-            #    parse xml string to DOM object
-            domData   = minidom.parseString(data)
-            domActors = minidom.parseString(actors)
-            #    create DOM Objects for series and episode data
-            seriesNodes  = domData.getElementsByTagName ("Series")
-            episodeNodes = domData.getElementsByTagName ("Episode")
-            #    parse DOMs for data, returns lists
-            seriesData   = self.parseSeries (seriesNodes)
-            episodesData = self.parseEpisodes (episodeNodes)
-            return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0], "episodes" : episodesData})
+            seriesData, episodesData, actorsData = self.parseAllTheThings(seriesid)
+            return render (request, 'distracted/searchDetail.html',
+                           {"series" : seriesData[0],
+                            "episodes" : episodesData,
+                            "actors" : actorsData})
         except urllib.error.HTTPError as e:
             HttpResponse ("HTTP Error: " + str(e.code) + str(url))
         except urllib.error.URLError as e:
@@ -190,16 +212,7 @@ class SearchDetail (generic.View):
 
 class SearchSave (SearchDetail):
     def get (self, request, seriesid):
-        data, actors = self.getData(seriesid)
-        #    parse xml string to DOM object
-        domData   = minidom.parseString(data)
-        domActors = minidom.parseString(actors)
-        #    create DOM Objects for series and episode data
-        seriesNodes  = domData.getElementsByTagName ("Series")
-        episodeNodes = domData.getElementsByTagName ("Episode")
-        #    parse DOMs for data, returns lists
-        seriesData   = self.parseSeries (seriesNodes)
-        episodesData = self.parseEpisodes (episodeNodes)
+        seriesData, episodesData, actorsData = self.parseAllTheThings(seriesid)
         s = Series.objects.create (
             series_id   = int(seriesData[0]["series_id"]),
             name        = seriesData[0]["name"],
@@ -213,6 +226,7 @@ class SearchSave (SearchDetail):
             lastUpdate  = int(seriesData[0]["lastUpdate"])
             )
         s.save()
+        #    save episodes
         for episode in episodesData:
             try:
                 season = Season.objects.get(season_id = episode["season_id"])
@@ -220,10 +234,8 @@ class SearchSave (SearchDetail):
                 season = Season.objects.create (
                                        season_id = episode["season_id"],
                                        series_id = s,
-                                       seasonNumber = episode["seasonNumber"]
-                                       )
-            e = Episode (
-                          id = episode["id"],
+                                       seasonNumber = episode["seasonNumber"])
+            e = Episode ( id = episode["id"],
                           director = episode["director"],
                           episodeName = episode["episodeName"],
                           firstAired = episode["firstAired"] or None,
@@ -231,11 +243,24 @@ class SearchSave (SearchDetail):
                           voters = episode["voters"],
                           episodeNumber = episode["episodeNumber"],
                           season_id = season,
-                          series_id = s
-                          )
+                          series_id = s)
             #    force insert, otherwise Django will use update if the Series already is saved once
             #    This way, an error get's thrown when the user tries to insert the same series twice
             e.save(force_insert=True)
+        #    save actor data
+        for actor in actorsData:
+            try:
+                dbactor = Actor.objects.get(actor_id = actor["id"])
+            except ObjectDoesNotExist as err:
+                dbactor = Actor.objects.create (
+                                               actor_id = actor["id"],
+                                               name = actor["Name"])
+            r = Roles( actor = dbactor,
+                       series = s,
+                       name = actor["Role"],
+                       sort_order = actor["SortOrder"],
+                       image = actor["Image"] )
+            r.save(force_insert=True)
         messages.success(request, "TV Series has been saved in the DB")            
         return render (request, 'distracted/searchDetail.html', {"series" : seriesData[0], "episodes" : episodesData})
 
